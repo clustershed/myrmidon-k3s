@@ -40,7 +40,7 @@ read -p "RENOVATE_TOKEN=" renToken
 
 # confirm
 echo ""
-read -p "Do you want to proceed? (Y/n): " yn
+read -p "Do you want to proceed? Y/n: " yn
 case $yn in
     [Yy]|[Yy][Ee][Ss])
         echo "Starting post installation ..."
