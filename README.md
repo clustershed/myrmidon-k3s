@@ -13,17 +13,9 @@ This is based on an older version of my personal homelab when i was building it.
 
 
 
-
 Encryption to handle
-
-
-renovate
-myrmidon-k3s/infrastructure/controllers/base/renovate/renovate-container-env.yaml
-
-
-grafana (2 places)
+grafana: a way to encrypt and set encrypted default password
 monitoring/controllers/staging/kube-prometheus-stack/grafana-admin-secret.yaml
-monitoring/configs/staging/kube-prometheus-stack/grafana-tls-secret.yaml
 
 
 
