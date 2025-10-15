@@ -200,7 +200,7 @@ else
   sleep 1
 
   # pull the repo
-  git clone https://github.com/$GITHUB_USER/$GITHUB_REPO
+  git clone "https://github.com/$ghUser/$ghRepo"
   
 
 
@@ -219,7 +219,7 @@ else
   --in-place renovate-container-env.yaml
 
   # move into the target location
-  mv renovate-container-env.yaml $GITHUB_REPO/infrastructure/controllers/base/renovate/renovate-container-env.yaml 
+  mv renovate-container-env.yaml $ghRepo/infrastructure/controllers/base/renovate/renovate-container-env.yaml 
 
 
 
@@ -246,7 +246,7 @@ else
     --in-place grafana-tls-secret.yaml
 
   # move into location
-  mv grafana-tls-secret.yaml $GITHUB_REPO/monitoring/configs/staging/kube-prometheus-stack/grafana-tls-secret.yaml
+  mv grafana-tls-secret.yaml $ghRepo/monitoring/configs/staging/kube-prometheus-stack/grafana-tls-secret.yaml
 
 
 
