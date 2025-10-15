@@ -146,7 +146,8 @@ url="https://github.com/getsops/sops/releases/download/${latest_version}/sops-${
 echo "Downloading SOPS ${latest_sops_version} from ${url}..."
 
 # Download the binary
-curl -Lo sops "${url}"
+#curl -Lo sops "${url}"
+curl -Lo sops "https://github.com/getsops/sops/releases/download/v3.11.0/sops-v3.11.0.linux.amd64"
 
 # Move the binary in to your PATH
 sudo mv sops /usr/local/bin/sops
