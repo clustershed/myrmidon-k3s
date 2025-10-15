@@ -251,9 +251,10 @@ else
 
 
 
-  cd $GITHUB_REPO
+  cd $ghRepo
   git config user.email "you@example.com"
-  git config user.name "$GITHUB_USER"
+  git config user.name "$ghUser"
+  git remote set-url origin "https://${ghUser}:${ghToken}@github.com/${ghUser}/${ghRepo}.git"
   git add .
   git commit -m "setup:Generate renovate and grafana secret files."
   git push
