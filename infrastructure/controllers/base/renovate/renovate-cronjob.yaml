@@ -4,7 +4,7 @@ metadata:
   name: renovate
   namespace: renovate
 spec:
-  schedule: "*/15 * * * *" # every 15 minutes (should be @daily)
+  schedule: "@hourly" # */15 * * * *" every 15 minutes (should be @daily)
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
