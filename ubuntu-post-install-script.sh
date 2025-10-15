@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# curl -s https://raw.githubusercontent.com/clustershed/myrmidon-k3s/refs/heads/main/ubuntu-post-install-script.sh | bash
+# curl -s https://raw.githubusercontent.com/clustershed/myrmidon-k3s/refs/heads/main/ubuntu-post-install-script.sh > ubuntu-post-install-script.sh
+# bash ubuntu-post-install-script.sh
 
 # exit immediately if any command returns a non-zero exit status
 set -e
