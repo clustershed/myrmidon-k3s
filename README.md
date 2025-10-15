@@ -13,14 +13,5 @@ This is based on an older version of my personal homelab when i was building it.
 
 
 
-Encryption to handle
-grafana: a way to encrypt and set encrypted default password
-monitoring/controllers/staging/kube-prometheus-stack/grafana-admin-secret.yaml
-
-
-
-
-
-
 
 
