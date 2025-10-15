@@ -16,7 +16,7 @@ fi
 # check if an age.agekey file exists in the current directory
 # if true, then this is a restore process with existing encryption keys
 # if false we need to setup new encryption and necessary secrets
-agekey_file_exists=false; [[ -f "/path/to/file" ]] && agekey_file_exists=true
+agekey_file_exists=false; [[ -f "age.agekey" ]] && agekey_file_exists=true
 
 
 # output to the cli so the user knows
