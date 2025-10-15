@@ -134,8 +134,8 @@ source ~/.bashrc
 
 
 
-# install age
-sudo apt install age
+# install age, and vim while we are here
+sudo apt install age vim -y
 
 
 # Get the latest SOPS release tag from GitHub
@@ -190,6 +190,18 @@ else
   echo "Generating new encryptions ..."
   
 
+  # in order to set these new secrets into the github project, we will
+  # need to make a clone. We will not do a checkout and PR because these
+  # files need to be in place before the flux bootstrap, so it's a
+  # direct push to the main branch
+
+  # we need git
+  sudo apt install git -y
+  sleep 1
+
+  # pull the repo
+  git clone https://github.com/$GITHUB_USER/$GITHUB_REPO
+  
 
 
 
@@ -207,7 +219,7 @@ else
   --in-place renovate-container-env.yaml
 
   # move into the target location
-  #mv renovate-container-env.yaml infrastructure/controllers/base/renovate/renovate-container-env.yaml 
+  mv renovate-container-env.yaml $GITHUB_REPO/infrastructure/controllers/base/renovate/renovate-container-env.yaml 
 
 
 
@@ -234,14 +246,19 @@ else
     --in-place grafana-tls-secret.yaml
 
   # move into location
-  #mv grafana-tls-secret.yaml monitoring/configs/staging/kube-prometheus-stack/grafana-tls-secret.yaml
+  mv grafana-tls-secret.yaml $GITHUB_REPO/monitoring/configs/staging/kube-prometheus-stack/grafana-tls-secret.yaml
 
 
 
 
+  cd $GITHUB_REPO
+  git config user.email "you@example.com"
+  git config user.name "$GITHUB_USER"
+  git add .
+  git commit -m "setup:Generate renovate and grafana secret files."
+  git push
 
-
-
+  cd ..
 
 fi
 
