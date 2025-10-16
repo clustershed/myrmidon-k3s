@@ -5,6 +5,9 @@ An example Kubernetes base cluster. This is a Myrmidon inspired K3s cluster, a f
 ![The First k3s Myrmidon Soldier](https://raw.githubusercontent.com/clustershed/images/refs/heads/main/myrmidon-0-grafana-figure-and-hardware.jpg)
 
 
+The quick start instructions are specific to this repository until the post-install script is expanded on for creating new.
+
+
 # Quick Start
 
 Requirements:
@@ -13,6 +16,8 @@ Requirements:
   - Needed for flux-system installation and encrypted yaml.
 - A github access token for the renovate bot.
   - Necessary for renovate to make pull requests for updates.
+- Copy this repo to your own, and change necessary values.
+  - The script is built for this repo specifically until expanded on to use/create a different repository.
 
 Download the post-install script.
 ```shell
