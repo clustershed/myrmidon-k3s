@@ -22,7 +22,7 @@ curl -s https://raw.githubusercontent.com/clustershed/myrmidon-k3s/refs/heads/ma
 Run the script
 ```shell
 bash ubuntu-post-install-script.sh
-``
+```
 
 The script will prompt for the repository name, github user, and the necessary tokens. Once complete, the cluster will complete building and will be ready to go.
 
