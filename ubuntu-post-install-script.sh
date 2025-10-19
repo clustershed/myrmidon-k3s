@@ -32,12 +32,34 @@ fi
 
 # prompt the user for credentials and other necessary information
 echo "Setup GitHub Connection:"
-read -p "GITHUB_REPO=" ghRepo # k3s-aether
+read -p "GITHUB_REPO=" ghRepo # myrmidon-k3s
 read -p "GITHUB_USER=" ghUser # clustershed
 read -p "GITHUB_TOKEN=" ghToken
-read -p "RENOVATE_TOKEN=" renToken
+read -p "RENOVATE_TOKEN=" renToken # optional: not needed if age.agekey exists
 
+# Validation
+# ensure required values are entered
+if [[ -z "${ghRepo}" ]]; then
+  echo "GITHUB_REPO required"
+  exit 1
+fi
+if [[ -z "${ghUser}" ]]; then
+  echo "GITHUB_USER required"
+  exit 1
+fi
+if [[ -z "${ghRepo}" ]]; then
+  echo "GITHUB_TOKEN required"
+  exit 1
+fi
 
+# ensure github repository exists
+REPO_URL="https://github.com/${ghUser}/${ghRepo}"
+if curl --silent --fail --head "$REPO_URL" > /dev/null; then
+    echo "Repository exists: $REPO_URL"
+else
+    echo "Repository does not exist or is inaccessible: $REPO_URL"
+    exit 1
+fi
 
 # confirm
 echo ""
