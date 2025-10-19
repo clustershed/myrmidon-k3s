@@ -4,7 +4,7 @@
 # bash ubuntu-post-install-script.sh
 
 # exit immediately if any command returns a non-zero exit status
-set -e
+set -euo pipefail
 
 
 # ensure the script was not called with sudo
