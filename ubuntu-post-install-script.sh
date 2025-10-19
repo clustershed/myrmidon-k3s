@@ -138,13 +138,12 @@ source ~/.bashrc
 sudo apt install age vim -y
 
 
+
 # Get the latest SOPS release tag from GitHub
-latest_sops_version=$(curl -s https://api.github.com/repos/getsops/sops/releases/latest | grep -Po '"tag_name":\s*"\K.*?(?=")')
-
+#latest_sops_version=$(curl -s https://api.github.com/repos/getsops/sops/releases/latest | grep -Po '"tag_name":\s*"\K.*?(?=")')
 # Construct the download URL
-url="https://github.com/getsops/sops/releases/download/${latest_version}/sops-${latest_sops_version}.linux.amd64"
-
-echo "Downloading SOPS ${latest_sops_version} from ${url}..."
+#url="https://github.com/getsops/sops/releases/download/${latest_version}/sops-${latest_sops_version}.linux.amd64"
+#echo "Downloading SOPS ${latest_sops_version} from ${url}..."
 
 # Download the binary
 #curl -Lo sops "${url}"
@@ -179,8 +178,6 @@ fi
 # get public key into var
 export AGE_PUBLIC=$(awk -F': ' '/^# public key:/ {print $2}' age.agekey)
 echo "echo \"AGE_PUBLIC=$AGE_PUBLIC\"" >> ~/.bashrc
-
-sleep 3 # hold on a second or 3 for a look
 
 
 # handle encryption of secrets for apps and services if this is a new installation
@@ -292,10 +289,9 @@ if $agekey_file_exists; then
   echo ""
 else
   echo ""
-  echo "New secrets were generated, the following files must be upated in the repository for re-installs using the generated age.agekey file."
-  echo ""
-  echo "infrastructure/controllers/base/renovate/renovate-container-env.yaml"
-  echo "monitoring/configs/staging/kube-prometheus-stack/grafana-tls-secret.yaml"
+  echo "New secrets were generated, the following files have been upated in the repository using the generated age.agekey file:"
+  echo "  infrastructure/controllers/base/renovate/renovate-container-env.yaml"
+  echo "  monitoring/configs/staging/kube-prometheus-stack/grafana-tls-secret.yaml"
   echo ""
   
 fi
