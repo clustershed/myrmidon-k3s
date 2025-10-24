@@ -24,6 +24,8 @@ Download the post-install script.
 curl -s https://raw.githubusercontent.com/clustershed/myrmidon-k3s/refs/heads/main/ubuntu-post-install-script.sh > ubuntu-post-install-script.sh
 ```
 
+Note: It is good practice to always inspect any scripts before running them!
+
 Run the script
 ```shell
 bash ubuntu-post-install-script.sh
