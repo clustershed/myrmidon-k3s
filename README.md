@@ -36,6 +36,15 @@ The script will prompt for the repository name, github user, and the necessary t
 
 ---
 
+# Applications
+- kube-prometheus-stack (prometheus/grafana)
+- ntfy
+- [go-clusterbulb](https://github.com/clustershed/go-clusterbulb)
+
+  
+
+---
+
 This is based on an older version of my personal homelab when i was building it.
 
 
