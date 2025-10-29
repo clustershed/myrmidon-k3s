@@ -8,7 +8,7 @@ set -euo pipefail
 
 
 # ensure the script was not called with sudo
-if [ -n "$SUDO_USER" ]; then
+if [ -n "${SUDO_USER:-}" ]; then
     echo "This script should not be run with sudo. Please run it as a regular user." >&2
     exit 1
 fi
@@ -47,7 +47,7 @@ if [[ -z "${ghUser}" ]]; then
   echo "GITHUB_USER required"
   exit 1
 fi
-if [[ -z "${ghRepo}" ]]; then
+if [[ -z "${ghToken}" ]]; then
   echo "GITHUB_TOKEN required"
   exit 1
 fi
@@ -135,10 +135,10 @@ source <(kubectl completion bash)
 
 # copy the generated config to a local file with the repo name as the cluster name
 # handle creation of secrets for apps and services if this is a new installation
-cp k3s.yaml $GITHUB_REPO.yaml
+cp k3s.yaml "${ghRepo}.yaml"
 
 # modify the new file so the ipaddress is changed from localhost to the external ip
-sed -i "s/127.0.0.1/$ipaddress/g" $GITHUB_REPO.yaml
+sed -i "s/127.0.0.1/${ipaddress}/g" "${ghRepo}.yaml"
 
 # add kubectl cli completion
 echo "source <(kubectl completion bash)" >> .bashrc
@@ -157,7 +157,7 @@ source ~/.bashrc
 
 
 # install age, and vim while we are here
-sudo apt install age vim -y
+sudo apt install age vim bash-completion -y
 
 
 
