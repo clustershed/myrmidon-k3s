@@ -1,0 +1,23 @@
+# Patch to set Grafana replicas from 3 to 1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-prometheus-stack-grafana # Target the Grafana Deployment
+spec:
+  replicas: 1
+---
+# Patch to set Alertmanager replicas from 2 to 1
+apiVersion: monitoring.coreos.com/v1
+kind: Alertmanager # Target the Alertmanager Custom Resource
+metadata:
+  name: kube-prometheus-stack-alertmanager
+spec:
+  replicas: 1
+---
+# Patch to set Prometheus replicas from 2 to 1
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus # Target the Prometheus Custom Resource
+metadata:
+  name: kube-prometheus-stack-prometheus
+spec:
+  replicas: 1

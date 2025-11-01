@@ -4,3 +4,22 @@ resources:
   - monitoring-namespace.yaml
   - helmrepository.yaml
   - helmrelease.yaml
+
+patches:
+  - path: replicas-patch.yaml
+    # No target is required for Strategic Merge Patch if the file contains the
+    # apiVersion/kind/metadata.name as shown above, but to be explicit:
+    target:
+      kind: Deployment
+      name: kube-prometheus-stack-grafana
+  - path: replicas-patch.yaml
+    target:
+      kind: Alertmanager
+      group: monitoring.coreos.com
+      name: kube-prometheus-stack-alertmanager
+  - path: replicas-patch.yaml
+    target:
+      kind: Prometheus
+      group: monitoring.coreos.com
+      name: kube-prometheus-stack-prometheus
+
