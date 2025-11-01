@@ -6,20 +6,26 @@ resources:
   - helmrelease.yaml
 
 patches:
+  # 1. Patch for Grafana Deployment (kind: Deployment)
   - path: replicas-patch.yaml
-    # No target is required for Strategic Merge Patch if the file contains the
-    # apiVersion/kind/metadata.name as shown above, but to be explicit:
     target:
       kind: Deployment
       name: kube-prometheus-stack-grafana
+      group: apps
+      version: v1
+  
+  # 2. Patch for Alertmanager Custom Resource (kind: Alertmanager)
   - path: replicas-patch.yaml
     target:
       kind: Alertmanager
-      group: monitoring.coreos.com
       name: kube-prometheus-stack-alertmanager
+      group: monitoring.coreos.com
+      version: v1
+  
+  # 3. Patch for Prometheus Custom Resource (kind: Prometheus)
   - path: replicas-patch.yaml
     target:
       kind: Prometheus
-      group: monitoring.coreos.com
       name: kube-prometheus-stack-prometheus
-
+      group: monitoring.coreos.com
+      version: v1
