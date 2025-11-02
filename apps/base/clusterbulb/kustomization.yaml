@@ -4,5 +4,4 @@ namespace: clusterbulb-monitor
 resources:
   - namespace.yaml
   - deployment.yaml
-  - service.yaml
-  - storage.yaml
+  - rbac.yaml
