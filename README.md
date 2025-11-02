@@ -38,7 +38,7 @@ The script will prompt for the repository name, github user, and the necessary t
 Automation of this area is still in design/prototyping phase.
 
 - Once the cluster is running and you are able to access the home-assistant UI, create your user, create a long-lived access token, and connect a supported RGB lamp. Update the clusterbulb deployment to target the RGB lamp via HA_LIGHT_ENTITY_ID.
-- Generate a new clusterbulb-secrets.yaml file, encrypt it, and push to your repo.
+- Generate a new clusterbulb-secrets.yaml file, set the ha-token, use the previously used github token, then encrypt the file and push to your repo.
 ```
 apiVersion: v1
 kind: Secret
