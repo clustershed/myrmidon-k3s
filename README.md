@@ -1,5 +1,5 @@
 # myrmidon-k3s
-An example Kubernetes base cluster. This is a Myrmidon inspired K3s cluster, a fleet of tiny PCs working fiercely and loyally to serve their master controller. Like ants following their queen, these nodes form a small but powerful army.
+An experimental Kubernetes base cluster. This is a Myrmidon inspired K3s cluster, a fleet of tiny PCs working fiercely and loyally to provide their services. Like ants following their queen, these nodes form a small but powerful army.
 
 
 ![The First k3s Myrmidon Soldier](https://raw.githubusercontent.com/clustershed/images/refs/heads/main/myrmidon-0-grafana-figure-and-hardware.jpg)
@@ -31,7 +31,26 @@ Run the script
 bash ubuntu-post-install-script.sh
 ```
 
-The script will prompt for the repository name, github user, and the necessary tokens. Once complete, the cluster will complete building and will be ready to go.
+The script will prompt for the repository name, github user, and the necessary tokens. When complete, the cluster will complete building.
+
+#### Manual Steps:
+
+Automation of this area is still in design/prototyping phase.
+
+- Once the cluster is running and you are able to access the home-assistant UI, create your user, create a long-lived access token, and connect a supported RGB lamp. Update the clusterbulb deployment to target the RGB lamp via HA_LIGHT_ENTITY_ID.
+- Generate a new clusterbulb-secrets.yaml file, encrypt it, and push to your repo.
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: clusterbulb-secrets
+  namespace: clusterbulb-monitor
+type: Opaque
+stringData:
+  ha-token: ""
+  gh-token: ""
+```
+`sops --age=$AGE_PUBLIC --encrypt --encrypted-regex '^(data|stringData)$' --in-place clusterbulb-secrets.yaml`
 
 
 ---
@@ -39,6 +58,7 @@ The script will prompt for the repository name, github user, and the necessary t
 # Applications
 - kube-prometheus-stack (prometheus/grafana)
 - ntfy
+- home-assistant (with matter integration)
 - [go-clusterbulb](https://github.com/clustershed/go-clusterbulb)
 
   
