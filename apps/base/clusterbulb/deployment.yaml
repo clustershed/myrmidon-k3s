@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clusterbulb
+  namespace: clusterbulb-monitor
+  labels:
+    app: clusterbulb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clusterbulb
+  template:
+    metadata:
+      labels:
+        app: clusterbulb
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: clusterbulb
+          image: ghcr.io/clustershed/go-clusterbulb:v0.0.3
+          env:
+          - name: HA_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: clusterbulb-secrets
+                key: ha-token
+          - name: HA_URL
+            value: "http://ha.myrmidon-k3s:80"  # adjust to your HA URL
+          - name: HA_LIGHT_ENTITY_ID
+            value: "light.cync_full_color_a19"  # adjust to your light entity
+          - name: HA_LIGHT_BRIGHTNESS
+            value: "2"
+          - name: GH_OWNER
+            value: "clustershed"
+          - name: GH_REPO
+            value: "myrmidon-k3s"
+          - name: GH_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: clusterbulb-secrets
+                key: gh-token
+          - name: GH_PR_CHECK_INTERVAL
+            value: "300"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+          securityContext:
+            allowPrivilegeEscalation: false
