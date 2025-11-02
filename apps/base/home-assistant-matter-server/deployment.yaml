@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant-matter-server
+  namespace: home-assistant
+  labels:
+    app: matter-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: matter-server
+  template:
+    metadata:
+      labels:
+        app: matter-server
+    spec:
+      hostNetwork: true # CRITICAL for mDNS/Discovery on the host network
+      # If you use a nodeSelector for your HA Pod, use it here too:
+      # nodeSelector:
+      #   environment: zigbee
+      containers:
+        - name: matter-server
+          # The official Matter Server container image
+          image: "ghcr.io/matter-js/python-matter-server:stable"
+          env:
+            - name: DATA_PATH
+              value: /data
+          ports:
+            # WebSocket Port for Home Assistant to connect to
+            - containerPort: 5580
+#              hostPort: 5580
+          securityContext:
+            # Required for mDNS / host networking access
+            privileged: true
+          volumeMounts:
+            - mountPath: /data
+              name: matter-server-config-volume
+      volumes:
+        - name: matter-server-config-volume
+          persistentVolumeClaim:
+            claimName: matter-server-pvc

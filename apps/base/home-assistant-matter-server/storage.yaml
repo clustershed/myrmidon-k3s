@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: matter-server-pvc
+  namespace: home-assistant
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi # Matter server does not need much storage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: matter-server-pv
+  namespace: home-assistant
+spec:
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /matter-server-pv # Set a location on your node for the Matter Server data
+  claimRef:
+    name: matter-server-pvc

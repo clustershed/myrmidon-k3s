@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: home-assistant-matter-headless
+  namespace: home-assistant
+  labels:
+    app: home-assistant-matter
+spec:
+  # Crucial line: ClusterIP: None makes this service "headless"
+  clusterIP: None
+  selector:
+    app: matter-server
+  ports:
+    - protocol: TCP
+      port: 5580
+      targetPort: 5580

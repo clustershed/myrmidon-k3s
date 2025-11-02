@@ -1,0 +1,133 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant
+  namespace: home-assistant
+  labels:
+    app: home-assistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-assistant
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+    spec:
+      initContainers:
+        - name: init-home-assistant-config
+          image: ghcr.io/home-assistant/home-assistant:stable
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "=== Initializing Home Assistant configuration ==="
+              mkdir -p /defaults /config
+
+              echo "Checking for required Home Assistant config files..."
+              # Ensure essential YAMLs exist so HA doesn't fall into recovery mode
+              for f in automations.yaml scripts.yaml scenes.yaml; do
+                if [ ! -f /config/$f ]; then
+                  echo "Creating empty $f..."
+                  echo "[]" > /config/$f
+                fi
+              done
+
+              echo "Writing configuration.yaml with reverse proxy support..."
+              rm -f /config/configuration.yaml
+              cat <<'EOF' > /config/configuration.yaml
+              # Loads default set of integrations. Do not remove.
+              default_config:
+              # Load frontend themes from the themes folder
+              frontend:
+                themes: !include_dir_merge_named themes
+              automation: !include automations.yaml
+              script: !include scripts.yaml
+              scene: !include scenes.yaml
+              http:
+                use_x_forwarded_for: true
+                trusted_proxies:
+                  - 10.0.0.0/8
+                  - 127.0.0.1
+                  - ::1
+              EOF
+
+              echo "Installing jq..."
+              apk add --no-cache jq
+
+              mkdir -p /config/.storage
+              FILE="/config/.storage/core.config_entries"
+
+              if [ ! -f "$FILE" ]; then
+                echo "Creating new core.config_entries..."
+                printf '%s\n' \
+                '{' \
+                '  "version": 1,' \
+                '  "minor_version": 5,' \
+                '  "key": "core.config_entries",' \
+                '  "data": { "entries": [] }' \
+                '}' > "$FILE"
+              fi
+
+              echo "Ensuring Matter config exists..."
+              if grep -q '"domain": "matter"' "$FILE"; then
+                echo "Updating Matter configuration..."
+                tmp=$(mktemp)
+                jq '(.data.entries[] | select(.domain == "matter") | .data.url) = "ws://home-assistant-matter-headless:5580/ws"' "$FILE" > "$tmp" && mv "$tmp" "$FILE"
+              else
+                echo "Inserting Matter configuration..."
+                tmp=$(mktemp)
+                jq '.data.entries += [{
+                  "created_at": "2025-01-01T00:00:00+00:00",
+                  "data": {
+                    "integration_created_addon": false,
+                    "url": "ws://home-assistant-matter-headless:5580/ws",
+                    "use_addon": false
+                  },
+                  "disabled_by": null,
+                  "discovery_keys": {},
+                  "domain": "matter",
+                  "entry_id": "bootstrap-matter",
+                  "minor_version": 1,
+                  "modified_at": "2025-01-01T00:00:00+00:00",
+                  "options": {},
+                  "pref_disable_new_entities": false,
+                  "pref_disable_polling": false,
+                  "source": "user",
+                  "subentries": [],
+                  "title": "Matter",
+                  "unique_id": null,
+                  "version": 1
+                }]' "$FILE" > "$tmp" && mv "$tmp" "$FILE"
+              fi
+
+              echo "Initialization complete."
+          volumeMounts:
+            - name: home-assistant-config
+              mountPath: /config
+
+      containers:
+        - name: home-assistant
+          image: ghcr.io/home-assistant/home-assistant:stable
+          env:
+            - name: MATTER_SERVER
+              value: "ws://home-assistant-matter-headless:5580/ws"
+          securityContext:
+            privileged: true
+          ports:
+            - containerPort: 8123
+          volumeMounts:
+            - mountPath: /config
+              name: home-assistant-config
+            - mountPath: /etc/localtime
+              name: localtime
+              readOnly: true
+
+      volumes:
+        - name: home-assistant-config
+          persistentVolumeClaim:
+            claimName: home-assistant-pvc
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+            type: File

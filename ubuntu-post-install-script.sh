@@ -91,6 +91,17 @@ sudo swapoff -a # turn off swap
 sudo sed -i '/swap/d' /etc/fstab
 
 
+# Stop the Wi-Fi card from entering low-power
+# modes that can exacerbate recovery timing
+# issues when the Sonoff zigbee controller
+# bursts for power.
+sudo tee /etc/modprobe.d/iwlwifi.conf <<EOF
+options iwlwifi power_save=0
+EOF
+sudo update-initramfs -u
+#sudo reboot # reboot is required
+
+
 # enable IPv4 packet forwarding
 # allows networking between pods across nodes
 #cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
@@ -303,23 +314,7 @@ cat age.agekey | kubectl create secret generic sops-age \
   --namespace=flux-system \
   --from-file=age.agekey=/dev/stdin
 
-
-
-
-
-if $agekey_file_exists; then
-  echo ""
-else
-  echo ""
-  echo "New secrets were generated, the following files have been upated in the repository using the generated age.agekey file:"
-  echo "  infrastructure/controllers/base/renovate/renovate-container-env.yaml"
-  echo "  monitoring/configs/staging/kube-prometheus-stack/grafana-tls-secret.yaml"
-  echo ""
-  
-fi
-
-
-
-
-
+# reboot to ensure iwlwifi updates
+echo "Rebooting system to finalize kernel module updates."
+sudo reboot now
 
