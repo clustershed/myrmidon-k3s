@@ -10,6 +10,8 @@ spec:
   selector:
     matchLabels:
       app: matter-server
+  strategy:
+    type: Recreate # Destroy old pods to ensure ports are free
   template:
     metadata:
       labels:
