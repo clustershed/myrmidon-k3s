@@ -124,10 +124,10 @@ spec:
               readOnly: true
           resources:
             requests:
-              cpu: "50m"
+              cpu: "250m"
               memory: "550Mi"
             limits:
-              cpu: "100m"
+              cpu: "500m"
               memory: "675Mi"
       volumes:
         - name: home-assistant-config
