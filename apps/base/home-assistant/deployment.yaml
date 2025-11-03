@@ -122,7 +122,13 @@ spec:
             - mountPath: /etc/localtime
               name: localtime
               readOnly: true
-
+          resources:
+            requests:
+              cpu: "225m"
+              memory: "550Mi"
+            limits:
+              cpu: "300m"
+              memory: "675Mi"
       volumes:
         - name: home-assistant-config
           persistentVolumeClaim:
