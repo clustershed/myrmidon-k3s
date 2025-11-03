@@ -36,6 +36,13 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: matter-server-config-volume
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "150Mi"
+            limits:
+              cpu: "150m"
+              memory: "200Mi"
       volumes:
         - name: matter-server-config-volume
           persistentVolumeClaim:
