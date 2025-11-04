@@ -5,7 +5,7 @@ metadata:
   namespace: ntfy
 spec:
   rules:
-    - host: ntfy.${DOMAIN}
+    - host: ntfy.myrmidon-k3s
       http:
         paths:
           - path: /
