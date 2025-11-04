@@ -11,14 +11,14 @@ spec:
     kind: GitRepository
     name: flux-system
 
-  postBuild:
-    substituteFrom:
-      - kind: ConfigMap
-        name: cluster-properties
-        optional: false
+#  postBuild:
+#    substituteFrom:
+#      - kind: ConfigMap
+#        name: cluster-properties
+#        optional: false
 
-configMapGenerator:
-  - name: cluster-properties
-    namespace: flux-system
-    envs:
-      - ./properties/cluster.properties
+#configMapGenerator:
+#  - name: cluster-properties
+#    namespace: flux-system
+#    envs:
+#      - ./properties/cluster.properties
