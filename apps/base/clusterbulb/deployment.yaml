@@ -45,7 +45,7 @@ spec:
                 name: clusterbulb-secrets
                 key: gh-token
           - name: GH_PR_CHECK_INTERVAL
-            value: "300"
+            value: "600"
           resources:
             requests:
               cpu: "22.5m"
