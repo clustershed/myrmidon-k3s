@@ -15,6 +15,7 @@ spec:
       labels:
         app: clusterbulb
     spec:
+      serviceAccountName: clusterbulb-monitor-sa
       securityContext:
         fsGroup: 1000
         runAsUser: 1000
