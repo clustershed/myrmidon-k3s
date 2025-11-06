@@ -11,8 +11,8 @@ metadata:
 rules:
 - apiGroups: [""]
   resources:
-    - nodes/status
-    - pods/status
+    - nodes
+    - pods
     - events
   verbs:
     - get
