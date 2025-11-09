@@ -30,7 +30,7 @@ spec:
                 name: clusterbulb-secrets
                 key: ha-token
           - name: HA_URL
-            value: "http://ha.myrmidon-k3s:80"  # adjust to your HA URL
+            value: "http://home-assistant.home-assistant.svc.cluster.local:8123"  # adjust to your HA URL
           - name: HA_LIGHT_ENTITY_ID
             value: "light.cync_full_color_a19"  # adjust to your light entity
           - name: HA_LIGHT_BRIGHTNESS
