@@ -22,7 +22,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: clusterbulb
-          image: ghcr.io/clustershed/go-clusterbulb:v0.0.5
+          image: ghcr.io/clustershed/go-clusterbulb:v0.0.7
           env:
           - name: HA_TOKEN
             valueFrom:
@@ -45,7 +45,11 @@ spec:
                 name: clusterbulb-secrets
                 key: gh-token
           - name: GH_PR_CHECK_INTERVAL
-            value: "600"
+            value: "300"
+          - name: NTFY_URL
+            value: "http://ntfy.myrmidon-k3s"
+          - name: NTFY_TOPIC
+            value: "myrmidon-k3s"
           resources:
             requests:
               cpu: "27.5m"
