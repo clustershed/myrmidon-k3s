@@ -22,7 +22,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: clusterbulb
-          image: ghcr.io/clustershed/go-clusterbulb:v0.0.8
+          image: ghcr.io/clustershed/go-clusterbulb:v0.0.9
           env:
           - name: HA_TOKEN
             valueFrom:
