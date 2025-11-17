@@ -61,13 +61,6 @@ stringData:
 - home-assistant (with matter integration)
 - [go-clusterbulb](https://github.com/clustershed/go-clusterbulb)
 
-  
-
----
-
-This is based on an older version of my personal homelab when i was building it.
-
-
 
 
 
