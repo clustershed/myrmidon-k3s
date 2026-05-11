@@ -5,7 +5,7 @@ metadata:
   namespace: ntfy
 spec:
   rules:
-    - host: ntfy.myrmidon-k3s
+    - host: ntfy.do.haimaz.ai
       http:
         paths:
           - path: /
