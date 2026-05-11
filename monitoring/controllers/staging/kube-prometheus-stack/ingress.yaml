@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: kube-prometheus-stack
   namespace: monitoring
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: traefik
   rules:
