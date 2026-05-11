@@ -14,7 +14,7 @@ spec:
             - name: renovate
               image: renovate/renovate:latest
               args:
-                - clustershed/myrmidon-k3s
+                - cmayen/myrmidon-k3s-2602
               envFrom:
                 - secretRef:
                     name: renovate-container-env

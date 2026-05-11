@@ -36,9 +36,9 @@ spec:
           - name: HA_LIGHT_BRIGHTNESS
             value: "2"
           - name: GH_OWNER
-            value: "clustershed"
+            value: "cmayen"
           - name: GH_REPO
-            value: "myrmidon-k3s"
+            value: "myrmidon-k3s-2602"
           - name: GH_TOKEN
             valueFrom:
               secretKeyRef:
@@ -49,7 +49,7 @@ spec:
           - name: NTFY_URL
             value: "http://ntfy.myrmidon-k3s"
           - name: NTFY_TOPIC
-            value: "myrmidon-k3s"
+            value: "myrmidon-k3s-2602"
           resources:
             requests:
               cpu: "27.5m"

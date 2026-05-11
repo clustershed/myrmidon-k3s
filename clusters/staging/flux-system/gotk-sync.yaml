@@ -11,7 +11,7 @@ spec:
     branch: main
   secretRef:
     name: flux-system
-  url: ssh://git@github.com/clustershed/myrmidon-k3s
+  url: ssh://git@github.com/cmayen/myrmidon-k3s-2602
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
