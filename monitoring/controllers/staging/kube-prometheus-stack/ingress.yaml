@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: grafana.myrmidon-k3s
+    - host: grafana.do.haimaz.ai
       http:
         paths:
           - backend:
@@ -19,5 +19,5 @@ spec:
   tls:
     - secretName: grafana-tls-secret
       hosts:
-      - grafana.myrmidon-k3s
+      - grafana.do.haimaz.ai
 
